@@ -4564,6 +4564,38 @@ ReflectionAngle(){return C3.toDegrees(this._GetRayReflectionAngle())}};
 }
 
 {
+'use strict';const C3=self.C3;C3.Behaviors.jumpthru=class JumpthruBehavior extends C3.SDKBehaviorBase{constructor(opts){super(opts)}Release(){super.Release()}};
+
+}
+
+{
+'use strict';const C3=self.C3;C3.Behaviors.jumpthru.Type=class JumpthruType extends C3.SDKBehaviorTypeBase{constructor(behaviorType){super(behaviorType)}Release(){super.Release()}OnCreate(){}};
+
+}
+
+{
+'use strict';const C3=self.C3;const ENABLE=0;
+C3.Behaviors.jumpthru.Instance=class JumpthruInstance extends C3.SDKBehaviorInstanceBase{constructor(behInst,properties){super(behInst);this.SetEnabled(true);if(properties)this.SetEnabled(properties[ENABLE])}Release(){super.Release()}SetEnabled(e){this._inst._SetJumpthruEnabled(!!e)}IsEnabled(){return this._inst._IsJumpthruEnabled()}SaveToJson(){return{"e":this.IsEnabled()}}LoadFromJson(o){this.SetEnabled(o["e"])}GetPropertyValueByIndex(index){switch(index){case ENABLE:return this.IsEnabled()}}SetPropertyValueByIndex(index,value){switch(index){case ENABLE:this.SetEnabled(value);
+break}}GetDebuggerProperties(){return[{title:"$"+this.GetBehaviorType().GetName(),properties:[{name:"behaviors.jumpthru.properties.enabled.name",value:this.IsEnabled(),onedit:v=>this.SetEnabled(v)}]}]}};
+
+}
+
+{
+'use strict';const C3=self.C3;C3.Behaviors.jumpthru.Cnds={IsEnabled(){return this.IsEnabled()}};
+
+}
+
+{
+'use strict';const C3=self.C3;C3.Behaviors.jumpthru.Acts={SetEnabled(e){this.SetEnabled(e)}};
+
+}
+
+{
+'use strict';const C3=self.C3;C3.Behaviors.jumpthru.Exps={};
+
+}
+
+{
 const C3 = self.C3;
 self.C3_GetObjectRefTable = function () {
 	return [
@@ -4587,6 +4619,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.sliderbar,
 		C3.Plugins.Audio,
 		C3.Behaviors.LOS,
+		C3.Behaviors.jumpthru,
+		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.Sprite.Cnds.IsOverlapping,
 		C3.Plugins.Keyboard.Cnds.IsKeyDown,
 		C3.Behaviors.Platform.Acts.SimulateControl,
@@ -4598,13 +4632,27 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.SetAnim,
 		C3.Behaviors.Platform.Cnds.IsJumping,
 		C3.Behaviors.Platform.Cnds.IsFalling,
-		C3.Plugins.System.Cnds.CompareBoolVar,
 		C3.Plugins.System.Acts.SetBoolVar,
+		C3.Plugins.Keyboard.Cnds.OnKey,
+		C3.Plugins.System.Acts.ToggleBoolVar,
+		C3.Plugins.Sprite.Acts.SetVisible,
+		C3.Plugins.System.Cnds.CompareBoolVar,
+		C3.Plugins.System.Cnds.Every,
+		C3.Plugins.System.Cnds.CompareVar,
+		C3.Plugins.System.Acts.SubVar,
+		C3.Plugins.System.Acts.AddVar,
+		C3.Behaviors.Platform.Acts.SetEnabled,
+		C3.Plugins.Keyboard.Cnds.OnKeyReleased,
+		C3.Behaviors.Timer.Acts.StartTimer,
+		C3.Behaviors.Timer.Cnds.IsTimerRunning,
+		C3.Plugins.System.Acts.Wait,
+		C3.Behaviors.Timer.Acts.StopTimer,
+		C3.Plugins.System.Acts.SetVar,
+		C3.Plugins.Sprite.Acts.Destroy,
 		C3.Plugins.Sprite.Acts.SetPos,
 		C3.Plugins.Sprite.Exps.X,
 		C3.Plugins.Sprite.Exps.Y,
 		C3.Plugins.Sprite.Cnds.OnCollision,
-		C3.Plugins.Sprite.Acts.Destroy,
 		C3.Plugins.System.Cnds.EveryTick,
 		C3.Plugins.Sprite.Acts.SetHeight,
 		C3.Plugins.Sprite.Acts.SetTowardPosition,
@@ -4612,24 +4660,14 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Mouse.Exps.Y,
 		C3.Plugins.System.Cnds.OnLayoutStart,
 		C3.Plugins.Sprite.Acts.AddChild,
-		C3.Plugins.Keyboard.Cnds.OnKey,
-		C3.Plugins.System.Acts.ToggleBoolVar,
-		C3.Plugins.Sprite.Acts.SetVisible,
-		C3.Plugins.System.Cnds.Every,
-		C3.Plugins.System.Cnds.CompareVar,
-		C3.Plugins.System.Acts.SubVar,
-		C3.Plugins.System.Acts.AddVar,
 		C3.Plugins.Sprite.Cnds.IsOnScreen,
 		C3.Plugins.Sprite.Acts.SubInstanceVar,
 		C3.Plugins.Sprite.Acts.SetOpacity,
 		C3.Behaviors.MoveTo.Acts.MoveToPosition,
 		C3.Plugins.Sprite.Acts.Spawn,
-		C3.Plugins.System.Acts.SetVar,
 		C3.Plugins.Audio.Acts.SetVolume,
 		C3.Plugins.System.Acts.SetLayerOpacity,
 		C3.Plugins.Sprite.Cnds.CompareInstanceVar,
-		C3.Behaviors.Platform.Acts.SetEnabled,
-		C3.Plugins.Keyboard.Cnds.OnKeyReleased,
 		C3.Behaviors.Platform.Cnds.IsEnabled,
 		C3.Behaviors.scrollto.Acts.SetEnabled,
 		C3.Plugins.TiledBg.Cnds.IsVisible,
@@ -4641,15 +4679,13 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Spritefont2.Cnds.IsVisible,
 		C3.Plugins.Spritefont2.Acts.SetVisible,
 		C3.Plugins.Spritefont2.Acts.SetText,
-		C3.Plugins.System.Acts.Wait,
-		C3.Behaviors.Timer.Acts.StartTimer,
-		C3.Behaviors.Timer.Cnds.IsTimerRunning,
-		C3.Behaviors.Timer.Acts.StopTimer,
-		C3.Plugins.System.Cnds.LayerCmpOpacity,
+		C3.Plugins.Spritefont2.Acts.TypewriterText,
+		C3.Plugins.Spritefont2.Cnds.OnTypewriterTextFinished,
+		C3.Plugins.Spritefont2.Cnds.IsRunningTypewriterText,
+		C3.Plugins.Audio.Acts.Play,
 		C3.Plugins.Mouse.Cnds.OnObjectClicked,
 		C3.Plugins.System.Acts.NextPrevLayout,
 		C3.Plugins.Audio.Cnds.IsTagPlaying,
-		C3.Plugins.Audio.Acts.Play,
 		C3.Plugins.Mouse.Cnds.IsOverObject,
 		C3.Plugins.Spritefont2.Acts.SetX,
 		C3.Plugins.Spritefont2.Cnds.CompareX,
@@ -4714,9 +4750,22 @@ self.C3_JsPropNameTable = [
 	{FlashlightDeath: 0},
 	{FINISHAREA: 0},
 	{DoorOpener: 0},
+	{Jumpthru: 0},
 	{Door3: 0},
 	{Action: 0},
 	{FlashMeter: 0},
+	{DarkGround: 0},
+	{RightAd: 0},
+	{LeftAd: 0},
+	{Lvlnumb: 0},
+	{Sine2: 0},
+	{GlowingRedEyes2: 0},
+	{GlowingRedEyes3: 0},
+	{Sprite6: 0},
+	{PlayB2: 0},
+	{DialogPlayer: 0},
+	{Textbox: 0},
+	{Dialog1: 0},
 	{HasKey: 0},
 	{FlashLightOn: 0},
 	{HasKey2: 0},
@@ -4724,7 +4773,9 @@ self.C3_JsPropNameTable = [
 	{LD: 0},
 	{Flashlayout: 0},
 	{FM: 0},
+	{WillContinue: 0},
 	{V: 0},
+	{Lvl: 0},
 	{IsOption1: 0}
 ];
 }
@@ -4826,6 +4877,7 @@ function or(l, r)
 }
 
 self.C3_ExpressionFuncs = [
+		() => "Movement and player controls",
 		() => 45,
 		() => -45,
 		() => 0,
@@ -4833,6 +4885,19 @@ self.C3_ExpressionFuncs = [
 		() => "idle",
 		() => "jump",
 		() => "fall",
+		() => 0.5,
+		() => 1,
+		() => 100,
+		() => 0.1,
+		() => 99,
+		() => "Idle",
+		() => "Charge",
+		() => 50,
+		() => 2.5,
+		() => "F",
+		() => 0.001,
+		() => 25,
+		() => "Player interation and ect",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject();
@@ -4853,16 +4918,11 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0();
 		},
-		() => 0.5,
-		() => 1,
-		() => 100,
-		() => 0.1,
 		() => 10,
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpInstVar();
 		},
-		() => 2.5,
 		() => 6,
 		() => 5,
 		() => "m",
@@ -4871,24 +4931,22 @@ self.C3_ExpressionFuncs = [
 			return () => v0.GetValue();
 		},
 		() => 4,
-		() => "Idle",
-		() => "Charge",
 		() => 200,
 		() => 90,
 		() => -1,
 		() => "You don't have the key to this door",
-		() => 50,
-		() => "F",
-		() => 0.001,
-		() => 99,
 		() => 0.05,
-		() => 74,
+		() => "This was me and the gang....",
+		() => 3,
+		() => "The good times...",
 		() => 2,
+		() => "top",
 		() => 0.0001,
 		() => "7",
 		() => "DO",
 		() => "UN",
-		() => ""
+		() => "",
+		() => 9
 ];
 
 
